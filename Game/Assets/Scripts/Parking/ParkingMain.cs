@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -17,21 +18,22 @@ namespace Parking
 
 		void Awake()
 		{
+			parkingSpots = new List<ParkingSpot>();
+			
+			ParkingSpot spot;
+			for (int i = 0; i < maxSpots; i++)
+			{
+				spot = new ParkingSpot();
+				parkingSpots.Add(spot);
+			}
+			
 			parkingElevator = GetComponent<ParkingElevator>();
 			parkingPlatform = GetComponentInChildren<ParkingPlatform>();
-			
+
 			parkingElevator.onElevatorDown.AddListener(MovePlatform);
 		}
 
-		void OnTriggerEnter(Collider other)
-		{
-			if (other.CompareTag("Vehicle"))
-			{
-				Invoke(nameof(StockVehicle), 1f);
-			}
-		}
-
-		void StockVehicle()
+		public void StockVehicle()
 		{
 			parkingElevator.ElevatorDown();
 		}
@@ -39,7 +41,7 @@ namespace Parking
 		void MovePlatform()
 		{
 			ParkingSpot spot = FindFirstFreeParkingSpot();
-			parkingPlatform.MovePlatformToParkingSpot(parkingSpots.IndexOf(spot));
+			parkingPlatform.MovePlatformToParkingSpot(parkingSpots.IndexOf(spot) + 1);
 		}
 
 		ParkingSpot FindFirstFreeParkingSpot()

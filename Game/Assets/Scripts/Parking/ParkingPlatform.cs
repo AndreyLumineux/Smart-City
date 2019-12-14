@@ -14,70 +14,57 @@ namespace Parking
 
 		bool platformMoving = false;
 		ParkingMain parkingMain;
+		ParkingElevator parkingElevator;
+		ParkingPlatformAttach parkingPlatformAttach;
 
 		void Awake()
 		{
 			parkingMain = GetComponentInParent<ParkingMain>();
+			parkingElevator = GetComponentInParent<ParkingElevator>();
+			parkingPlatformAttach = GetComponent<ParkingPlatformAttach>();
 		}
 
 		void Start()
 		{
-			MovePlatformToParkingSpot(21);
+//			MovePlatformToParkingSpot(65);
 		}
 
+		public void RetrievePlatform(int verticalMoves, int horizontalMoves)
+		{
+			PlatformMove(horizontalMoves * 2 * Vector3.left);
+			PlatformMove(verticalMoves * 6 * Vector3.forward);
+		}
+		
 		public void MovePlatformToParkingSpot(int spot)
 		{
-			int count = spot % 4;
-			int pack = (count == 0 ? 0 : 1) + spot / 4;
-			MovePlatformToPack(pack);
+			int a = (spot - 1) / parkingMain.columns;
+			int backMoves = (a + 1) / 2;
+			PlatformMove(backMoves * 6 * Vector3.back);
 
-			StartCoroutine(nameof(PlatformDropVehicleCoroutine), count);
+			int b = (spot - 1) % parkingMain.columns;
+			int rightMoves = b + 1 + (b / 2);
+			PlatformMove(rightMoves * 2 * Vector3.right);
+
+			bool upSide = (a % 2 != 0);
+			StartCoroutine(nameof(PlatformDropVehicleCoroutine), upSide);
+			
+			RetrievePlatform(backMoves, rightMoves);
+
+			StartCoroutine(nameof(ElevatorUpCoroutine));
 		}
 
-		void PlatformDropVehicle(Vector3 direction)
-		{
-			Debug.Log("Dropped vehicle");
-		}
-
-		IEnumerator PlatformDropVehicleCoroutine(int count)
+		public IEnumerator ElevatorUpCoroutine()
 		{
 			while (platformMoving)
 			{
 				yield return new WaitForFixedUpdate();
 			}
 
-			switch (count)
-			{
-				case 0:
-					PlatformMove(Vector3.back * 3);
-					PlatformMove(Vector3.right * 3);
-					PlatformMove(Vector3.forward * 2);
-					PlatformDropVehicle(Vector3.left);
-					break;
-				case 1:
-					PlatformMove(Vector3.back);
-					PlatformDropVehicle(Vector3.right);
-					break;
-				case 2:
-					PlatformMove(Vector3.back * 2);
-					PlatformDropVehicle(Vector3.right);
-					break;
-				case 3:
-					PlatformMove(Vector3.back * 3);
-					PlatformMove(Vector3.right * 2);
-					PlatformDropVehicle(Vector3.forward);
-					break;
-				default:
-					throw new Exception();
-			}
+			platformMoving = true;
+			parkingElevator.ElevatorUp();
+			platformMoving = false;
 		}
-
-		void MovePlatformToPack(int pack)
-		{
-			PlatformMove((pack / parkingMain.columns) * 3 * Vector3.back);
-			PlatformMove(((pack % parkingMain.columns - 1 + parkingMain.columns) % parkingMain.columns) * 3 * Vector3.right);
-		}
-
+		
 		public void PlatformMove(Vector3 movement)
 		{
 			StartCoroutine(nameof(PlatformMoveCoroutine), movement);
@@ -106,5 +93,55 @@ namespace Parking
 
 			platformMoving = false;
 		}
+		
+		void PlatformDropVehicle(Vector3 direction)
+		{
+			Debug.Log("Dropped vehicle");
+		}
+
+		IEnumerator PlatformDropVehicleCoroutine(bool upSide)
+		{
+			while (platformMoving)
+			{
+				yield return new WaitForFixedUpdate();
+			}
+
+			platformMoving = true;
+
+			if (transform.childCount == 0)
+			{
+				Debug.LogError("Platform has no vehicle attached, but DropVehicle has been tried.");
+			}
+			Transform vehicle = transform.GetChild(0);
+			parkingPlatformAttach.Dettach(vehicle.gameObject);
+			
+			Vector3 direction = (upSide) ? Vector3.forward : Vector3.back;
+			direction = direction * 2;
+			float t = 0;
+			Vector3 initialPosition = vehicle.position;
+			Vector3 targetPosition = initialPosition + direction;
+			while (t < 1)
+			{
+				t += speed * Time.deltaTime / direction.magnitude;
+				vehicle.position = Vector3.Lerp(initialPosition, targetPosition, t);
+
+				yield return new WaitForFixedUpdate();
+			}
+
+			platformMoving = false;
+		}
+
+		
+		
+		
+		
+		
+		
+		
+//		void MovePlatformToPack(int pack)
+//		{
+//			PlatformMove((pack / parkingMain.columns) * 3 * Vector3.back);
+//			PlatformMove(((pack % parkingMain.columns - 1 + parkingMain.columns) % parkingMain.columns) * 3 * Vector3.right);
+//		}
 	}
 }
