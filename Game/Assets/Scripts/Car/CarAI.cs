@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections;
 using Road;
 using UnityEngine;
 
@@ -8,7 +6,7 @@ namespace Car
 {
     public class CarAI : MonoBehaviour
     {
-        [SerializeField] private float raycastDistance = 1f;
+        [SerializeField] private float raycastDistance = 2;
         [SerializeField] private float speed;
         private bool isMoving;
         public float Speed => speed;
@@ -16,13 +14,23 @@ namespace Car
 
         private Coroutine moveCoroutine;
         private int carLayerMask;
+        private RoadNode nextNode;
 
         private void Awake()
         {
             carLayerMask = LayerMask.GetMask("Car");
         }
+        
+        public void QueueMoveTo(RoadNode next)
+        {
+            nextNode = next;
+            if (!isMoving)
+            {
+                MoveTo(next);
+            }
+        }
 
-        public void MoveTo(RoadNode node)
+        private void MoveTo(RoadNode node)
         {
             if (isMoving)
             {
@@ -30,31 +38,33 @@ namespace Car
             }
 
             isMoving = true;
+            nextNode = null;
             moveCoroutine = StartCoroutine(MoveToCoroutine(node));
         }
 
         public void StopMoving()
         {
             isMoving = false;
+            nextNode = null;
             if (moveCoroutine != null)
             {
                 StopCoroutine(moveCoroutine);
+                moveCoroutine = null;
             }
         }
-
-        [SuppressMessage("ReSharper", "Unity.InefficientPropertyAccess")]
+        
         private IEnumerator MoveToCoroutine(RoadNode node)
         {
             Vector3 position = transform.position;
             Vector3 target = node.transform.position;
             Vector3 direction = target - position;
+            transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
             float distance = Vector3.Distance(position, target);
             float t = 0;
-            transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
             while (t < 1)
             {
                 if (!Physics.Raycast(new Ray(transform.position, transform.forward), out RaycastHit _,
-                    raycastDistance, carLayerMask, QueryTriggerInteraction.Collide))
+                    raycastDistance, carLayerMask))
                 {
                     t += Time.deltaTime * speed / distance;
                     transform.position = Vector3.Lerp(position, target, t);
@@ -63,7 +73,11 @@ namespace Car
                 yield return null;
             }
 
-            StopMoving();
+            isMoving = false;
+            if (nextNode)
+            {
+                MoveTo(nextNode);
+            }
         }
 
         private void OnDrawGizmosSelected()

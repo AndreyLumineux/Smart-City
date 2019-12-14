@@ -33,7 +33,7 @@ class ParkingLotRepository extends SqlRepository
             ->where("p.id", QueryBuilderOperator::EQUAL, ":id");
         $query = $this->mapper->MapSelect($select);
         $stmt = $this->driver->executeQuery($query, [
-            ":id" => $id
+            ":id" => $id,
         ]);
         /** @var ParkingLot $lot */
         $lot = $stmt->fetchObject(ParkingLot::class);
@@ -70,8 +70,22 @@ class ParkingLotRepository extends SqlRepository
         $query = $this->mapper->MapUpdate($update);
         $stmt = $this->driver->executeQuery($query, [
             ":id" => $id,
-            ":current" => $current
+            ":current" => $current,
         ]);
+
+        return $stmt->rowCount() > 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function emptyAll(): bool
+    {
+        $update = $this->factory->Update("parkingLots")
+            ->update("current", 0);
+        $query = $this->mapper->MapUpdate($update);
+        $stmt = $this->driver->executeQuery($query, []);
+
         return $stmt->rowCount() > 0;
     }
 }

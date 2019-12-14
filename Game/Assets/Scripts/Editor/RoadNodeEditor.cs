@@ -21,7 +21,7 @@ namespace Editor
                 
                 GameObject instance = Instantiate(prefab, transform.position, transform.rotation, transform.parent);
                 RoadNode node = instance.GetComponent<RoadNode>();
-                currentNode.AddNode(node);
+                currentNode.adjacentNodes.Add(node);
 
                 PrefabUtility.UnloadPrefabContents(prefab);
 

@@ -28,6 +28,12 @@
                 "controller": "App\\Controller\\APIController",
                 "action": "updateParkingLotAction",
                 "request_method": "POST"
+            },
+            {
+                "path": "/api/lots/emptyAll",
+                "controller": "App\\Controller\\APIController",
+                "action": "emptyAllLotsAction",
+                "request_method": "POST"
             }
         ],
         "fallback": {

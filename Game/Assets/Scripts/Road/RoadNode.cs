@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Car;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Road
@@ -10,18 +10,16 @@ namespace Road
     {
         public List<RoadNode> adjacentNodes = new List<RoadNode>();
 
-        public void AddNode(RoadNode node)
-        {
-            adjacentNodes.Add(node);
-        }
-
-        private void OnTriggerEnter(Collider other)
+        protected virtual void OnTriggerEnter(Collider other)
         {
             if (!(other.gameObject.GetComponent<CarAI>() is CarAI carAI)) return;
             carAI.StopMoving();
-            RoadNode next = adjacentNodes[Random.Range(0, adjacentNodes.Count)];
-            // carAI.transform.position = transform.position;
-            carAI.MoveTo(next);
+            if (adjacentNodes.Any())
+            {
+                RoadNode next = adjacentNodes[Random.Range(0, adjacentNodes.Count)];
+                // carAI.transform.position = transform.position;
+                carAI.QueueMoveTo(next);
+            }
         }
 
         private void OnDrawGizmos()
@@ -36,7 +34,7 @@ namespace Road
 
         private void DrawGizmos(Color color)
         {
-            Gizmos.DrawIcon(transform.position, "roadicon.png");
+            Gizmos.DrawIcon(transform.position + Vector3.up * 0.5f, "roadicon.png");
             Gizmos.color = color;
             foreach (RoadNode node in adjacentNodes)
             {
