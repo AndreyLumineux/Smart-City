@@ -22,7 +22,6 @@ namespace Editor
                             roadNode.transform.position, Quaternion.identity, generator.root);
                     }
                 }
-                DestroyImmediate(generator.gameObject);
             }
         }
 
