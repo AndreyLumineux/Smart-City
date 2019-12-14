@@ -24,6 +24,7 @@ $view = new View();
 <main>
     <?= $view->defineSection('main', true) ?>
 </main>
+<script src="/static/js/jquery.js" type="text/javascript"></script>
 <?= $view->defineSection('scripts') ?>
 </body>
 </html>
