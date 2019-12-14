@@ -40,14 +40,14 @@
       ctx.drawImage(map_pin, x, y, marker_width, marker_height);
 
       ctx.font = font_size + 'px serif';
-      ctx.strokeText(text, x + half_marker_width - measure.width / 2, y + font_size * 3);
+      ctx.strokeText(text, x - measure.width / 2, y + marker_height + font_size);
 
       ctx.restore();
     });
   }
 
   function loop() {
-    $.getJSON("/api/parkingLots/get/all").done((data) => {
+    $.getJSON("/api/lots/get/all").done((data) => {
       parkingLots = data;
     }).always(redraw);
     setTimeout(loop, 1000);

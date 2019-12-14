@@ -20,5 +20,14 @@ namespace ParkAPIClient
             
             return response.StatusCode == HttpStatusCode.OK;
         }
+
+        public async Task<bool> EmptyAllLots()
+        {
+            HttpWebRequest request = WebRequest.CreateHttp($"{Host}/api/lots/emptyAll");
+            request.Method = WebRequestMethods.Http.Post;
+            HttpWebResponse response = (HttpWebResponse) await request.GetResponseAsync();
+            
+            return response.StatusCode == HttpStatusCode.OK;
+        }
     }
 }

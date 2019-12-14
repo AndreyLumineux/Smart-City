@@ -35,4 +35,14 @@ class APIController extends Controller
             return $this->renderHttpStatusPage(500);
         }
     }
+
+    public function emptyAllLotsAction()
+    {
+        $success = $this->parkingLotRepository->emptyAll();
+        if ($success) {
+            return $this->renderHttpStatusPage(200);
+        } else {
+            return $this->renderHttpStatusPage(500);
+        }
+    }
 }
