@@ -18,7 +18,7 @@ namespace Editor
                 Transform transform = currentNode.transform;
 
                 GameObject prefab = PrefabUtility.LoadPrefabContents("Assets/Prefabs/RoadNode.prefab");
-
+                
                 GameObject instance = Instantiate(prefab, transform.position, transform.rotation, transform.parent);
                 RoadNode node = instance.GetComponent<RoadNode>();
                 currentNode.AddNode(node);
@@ -48,9 +48,9 @@ namespace Editor
                 }
             }
 
-            foreach (RoadNode roadNode1 in roadNodes.Except(valid))
+            foreach (RoadNode invalidNode in roadNodes.Except(valid))
             {
-                Destroy(roadNode1);
+                DestroyImmediate(invalidNode.gameObject);
             }
         }
     }

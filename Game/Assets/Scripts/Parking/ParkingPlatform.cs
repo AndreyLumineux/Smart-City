@@ -10,7 +10,7 @@ namespace Parking
 {
 	public class ParkingPlatform : MonoBehaviour
 	{
-		public float speed = 50f;
+		public float speed = 5f;
 
 		bool platformMoving = false;
 		ParkingMain parkingMain;
@@ -22,13 +22,13 @@ namespace Parking
 
 		void Start()
 		{
-			MovePlatformToSlot(-1);
+			MovePlatformToParkingSpot(21);
 		}
 
-		public void MovePlatformToSlot(int slot)
+		public void MovePlatformToParkingSpot(int spot)
 		{
-			int count = slot % 4;
-			int pack = (count == 0 ? 0 : 1) + slot / 4;
+			int count = spot % 4;
+			int pack = (count == 0 ? 0 : 1) + spot / 4;
 			MovePlatformToPack(pack);
 
 			StartCoroutine(nameof(PlatformDropVehicleCoroutine), count);
@@ -72,7 +72,7 @@ namespace Parking
 			}
 		}
 
-		public void MovePlatformToPack(int pack)
+		void MovePlatformToPack(int pack)
 		{
 			PlatformMove((pack / parkingMain.columns) * 3 * Vector3.back);
 			PlatformMove(((pack % parkingMain.columns - 1 + parkingMain.columns) % parkingMain.columns) * 3 * Vector3.right);
