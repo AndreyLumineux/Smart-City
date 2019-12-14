@@ -167,7 +167,8 @@ GameObject:
   - component: {fileID: 1985349645045238006}
   - component: {fileID: 4832360292869280242}
   - component: {fileID: 3258245259174141203}
-  m_Layer: 0
+  - component: {fileID: 1117882636024636125}
+  m_Layer: 9
   m_Name: Car_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,11 +202,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1646981259178978}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.9, y: 0.7, z: 2.3}
+  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!54 &4832360292869280242
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -234,7 +235,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052d4032839c450589c84b13277b200e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  raycastDistance: 2
   speed: 5
+--- !u!65 &1117882636024636125
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1646981259178978}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1, y: 0.7, z: 0.1}
+  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!1 &1664593040851034
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,6 +20,7 @@ namespace Road
             if (!(other.gameObject.GetComponent<CarAI>() is CarAI carAI)) return;
             carAI.StopMoving();
             RoadNode next = adjacentNodes[Random.Range(0, adjacentNodes.Count)];
+            // carAI.transform.position = transform.position;
             carAI.MoveTo(next);
         }
 
