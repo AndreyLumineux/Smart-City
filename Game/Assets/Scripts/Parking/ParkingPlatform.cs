@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
+using Random = System.Random;
 
 // ReSharper disable PossibleLossOfFraction
 
@@ -18,14 +20,40 @@ namespace Parking
 			parkingMain = GetComponentInParent<ParkingMain>();
 		}
 
+		void Start()
+		{
+			MovePlatformToSlot(-1);
+		}
+
 		public void MovePlatformToSlot(int slot)
 		{
-			int pack = slot / 4;
+			int count = slot % 4;
+			int pack = (count == 0 ? 0 : 1) + slot / 4;
 			MovePlatformToPack(pack);
 
-			int count = slot % 4;
+			StartCoroutine(nameof(PlatformDropVehicleCoroutine), count);
+		}
+
+		void PlatformDropVehicle(Vector3 direction)
+		{
+			Debug.Log("Dropped vehicle");
+		}
+
+		IEnumerator PlatformDropVehicleCoroutine(int count)
+		{
+			while (platformMoving)
+			{
+				yield return new WaitForFixedUpdate();
+			}
+
 			switch (count)
 			{
+				case 0:
+					PlatformMove(Vector3.back * 3);
+					PlatformMove(Vector3.right * 3);
+					PlatformMove(Vector3.forward * 2);
+					PlatformDropVehicle(Vector3.left);
+					break;
 				case 1:
 					PlatformMove(Vector3.back);
 					PlatformDropVehicle(Vector3.right);
@@ -39,41 +67,39 @@ namespace Parking
 					PlatformMove(Vector3.right * 2);
 					PlatformDropVehicle(Vector3.forward);
 					break;
-				case 0:
-					PlatformMove(Vector3.back * 3);
-					PlatformMove(Vector3.right * 3);
-					PlatformMove(Vector3.forward * 2);
-					PlatformDropVehicle(Vector3.left);
-					break;
+				default:
+					throw new Exception();
 			}
-		}
-
-		void PlatformDropVehicle(Vector3 right)
-		{
-			throw new System.NotImplementedException();
 		}
 
 		public void MovePlatformToPack(int pack)
 		{
-			PlatformMove(Vector3.back * (pack / parkingMain.columns));
-			PlatformMove(Vector3.right * ((pack % parkingMain.columns - 1 + parkingMain.columns) % parkingMain.columns));
+			PlatformMove((pack / parkingMain.columns) * 3 * Vector3.back);
+			PlatformMove(((pack % parkingMain.columns - 1 + parkingMain.columns) % parkingMain.columns) * 3 * Vector3.right);
 		}
 
 		public void PlatformMove(Vector3 movement)
 		{
-			StartCoroutine(nameof(PlatformMoveCoroutine), transform.position + movement);
+			StartCoroutine(nameof(PlatformMoveCoroutine), movement);
 		}
 
-		IEnumerator PlatformMoveCoroutine(Vector3 targetPosition)
+		IEnumerator PlatformMoveCoroutine(Vector3 movement)
 		{
-			if (platformMoving)
-				yield return new WaitForSeconds(0.1f);
+			while (platformMoving)
+			{
+				yield return new WaitForFixedUpdate();
+			}
 
 			platformMoving = true;
-			Vector3 direction = targetPosition - transform.position;
-			while (!Mathf.Approximately(0, direction.magnitude))
+
+			float t = 0;
+			Vector3 initialPosition = transform.position;
+			Vector3 targetPosition = initialPosition + movement;
+			Vector3 direction = targetPosition - initialPosition;
+			while (t < 1)
 			{
-				transform.Translate(Time.deltaTime * speed * direction.normalized);
+				t += speed * Time.deltaTime / direction.magnitude;
+				transform.position = Vector3.Lerp(initialPosition, targetPosition, t);
 
 				yield return new WaitForFixedUpdate();
 			}

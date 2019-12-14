@@ -334,6 +334,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c483f663fb8835b4cb793989ee297753, type: 3}
+--- !u!1 &191153394 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7994317028613297274, guid: efd665d86cbb7694f8fd0161c26d9e17,
+    type: 3}
+  m_PrefabInstance: {fileID: 8448618468397515619}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &191153399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191153394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aade7eb8e715f8c4dbf920b9de2e6f17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
 --- !u!1001 &222107626
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -482,6 +501,40 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c483f663fb8835b4cb793989ee297753, type: 3}
+--- !u!1 &395734270 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8448618468435248609, guid: efd665d86cbb7694f8fd0161c26d9e17,
+    type: 3}
+  m_PrefabInstance: {fileID: 8448618468397515619}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &395734271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395734270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4ce20c87f6f1224889402821ac353ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &395734272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395734270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1c76bff94282f44781472e135e64f68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSlots: 36
+  columns: 6
+  rows: 6
+  slots: 
 --- !u!1001 &415325039
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2106,8 +2159,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1653990630}
-  m_LocalRotation: {x: -0.17979646, y: 0.3552823, z: -0.06983968, w: -0.91464216}
-  m_LocalPosition: {x: 3.7078853, y: 2.4024358, z: -5.18}
+  m_LocalRotation: {x: -0.21627197, y: -0.31271622, z: 0.073353775, w: -0.9219839}
+  m_LocalPosition: {x: -0.37163863, y: 2.0611086, z: -6.5545826}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
