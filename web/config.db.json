@@ -1,0 +1,10 @@
+{
+    "database_connections": [
+        {
+            "name": "default",
+            "dsn": "pgsql:host=localhost;dbname=parkapi;port=5432",
+            "username": "postgres",
+            "password": "postgres"
+        }
+    ]
+}

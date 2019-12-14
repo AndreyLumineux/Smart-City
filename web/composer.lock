@@ -1,0 +1,61 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "49be80b0013888e92dea734a1bda9cd8",
+    "packages": [
+        {
+            "name": "emanuel/framework",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@bitbucket.org:emlvintila/framework.git",
+                "reference": "f7868c3e7537fc887824939a196b206feec6fd5d"
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-json": "*",
+                "ext-openssl": "*",
+                "ext-pdo": "*",
+                "ext-yaml": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8"
+            },
+            "bin": [
+                "bin/init"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Framework\\": "./"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Emanuel Vintilă",
+                    "email": "eml.vintila@gmail.com"
+                }
+            ],
+            "time": "2019-12-14T11:40:47+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "emanuel/framework": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "ext-json": "*",
+        "ext-pdo": "*",
+        "ext-openssl": "*",
+        "ext-yaml": "*",
+        "ext-dom": "*"
+    },
+    "platform-dev": []
+}

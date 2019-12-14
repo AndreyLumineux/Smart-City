@@ -1,0 +1,44 @@
+{
+    "env": {
+        "isDevelopment": true,
+        "useOutputBuffering": true
+    },
+    "routing": {
+        "routes": [
+            {
+                "path": "/",
+                "controller": "App\\Controller\\DefaultController",
+                "action": "homeAction",
+                "request_method": "GET"
+            },
+            {
+                "path": "/api/lots/get/all",
+                "controller": "App\\Controller\\APIController",
+                "action": "getAllParkingLotsAction",
+                "request_method": "GET"
+            },
+            {
+                "path": "/api/lots/get/(\\d+)",
+                "controller": "App\\Controller\\APIController",
+                "action": "getParkingLotAction",
+                "request_method": "GET"
+            },
+            {
+                "path": "/api/lots/update/(\\d+)/(\\d+)",
+                "controller": "App\\Controller\\APIController",
+                "action": "updateParkingLotAction",
+                "request_method": "POST"
+            }
+        ],
+        "fallback": {
+            "controller": "App\\Controller\\DefaultController",
+            "action": "notFoundAction"
+        }
+    },
+    "database_config": "config.db.json",
+    "i18n": {
+        "lang_directory": "lang",
+        "cache_directory": ".langcache",
+        "fallback_lang": "en"
+    }
+}
