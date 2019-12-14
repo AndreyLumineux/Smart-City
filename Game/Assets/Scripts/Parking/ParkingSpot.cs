@@ -3,6 +3,6 @@
 	public class ParkingSpot
 	{
 		public bool Occupied;
-		public int TimeElapsed;
+		public float TimeElapsed;
 	}
 }

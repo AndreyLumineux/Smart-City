@@ -33,6 +33,14 @@ namespace Parking
 			parkingElevator.onElevatorDown.AddListener(MovePlatform);
 		}
 
+		void Update()
+		{
+			foreach (ParkingSpot spot in parkingSpots)
+			{
+				spot.TimeElapsed += Time.deltaTime;
+			}
+		}
+
 		public void StockVehicle()
 		{
 			parkingElevator.ElevatorDown();
@@ -42,6 +50,7 @@ namespace Parking
 		{
 			ParkingSpot spot = FindFirstFreeParkingSpot();
 			parkingPlatform.MovePlatformToParkingSpot(parkingSpots.IndexOf(spot) + 1);
+			spot.Occupied = true;
 		}
 
 		ParkingSpot FindFirstFreeParkingSpot()
