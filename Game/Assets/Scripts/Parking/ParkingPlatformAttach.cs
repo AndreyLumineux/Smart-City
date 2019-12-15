@@ -6,6 +6,8 @@ namespace Parking
 {
 	public class ParkingPlatformAttach : MonoBehaviour
 	{
+		private const float PLATFORM_VEHICLE_Y_OFFSET = 0.3f;
+		
 		private ParkingMain parkingMain;
 
 		private void Awake()
@@ -18,7 +20,7 @@ namespace Parking
 			if (other.CompareTag("Vehicle"))
 			{
 				Attach(other.gameObject);
-				other.gameObject.transform.position = transform.position;
+				other.gameObject.transform.position = transform.position + Vector3.up * PLATFORM_VEHICLE_Y_OFFSET;
 				parkingMain.StockVehicle();
 			}
 		}

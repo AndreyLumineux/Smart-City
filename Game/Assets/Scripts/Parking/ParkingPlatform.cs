@@ -4,8 +4,6 @@ using UnityEditor;
 using UnityEngine;
 using Random = System.Random;
 
-// ReSharper disable PossibleLossOfFraction
-
 namespace Parking
 {
 	public class ParkingPlatform : MonoBehaviour
