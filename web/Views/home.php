@@ -20,8 +20,8 @@ Hello, world!
 
 <?php $view->beginSection('main') ?>
 <div style="display: none">
-    <img id="map" src="/static/images/map.jpg"/>
-    <img id="map_pin" src="/static/images/pin.png"/>
+    <img id="map" src="/static/images/map.jpg" alt="map"/>
+    <img id="map_pin" src="/static/images/pin.png" alt="map_pin"/>
 </div>
 <canvas id="root">
 </canvas>
