@@ -45,7 +45,7 @@ namespace Car
         public void StopMoving()
         {
             isMoving = false;
-            nextNode = null;
+            // nextNode = null;
             if (moveCoroutine != null)
             {
                 StopCoroutine(moveCoroutine);
