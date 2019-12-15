@@ -325,7 +325,7 @@ GameObject:
   - component: {fileID: 114159273449091310}
   - component: {fileID: 65757341767356334}
   - component: {fileID: 65357624451961904}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Police_car
   m_TagString: Vehicle
   m_Icon: {fileID: 0}
@@ -379,7 +379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052d4032839c450589c84b13277b200e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raycastDistance: 2
+  raycastDistance: 3
   speed: 5
 --- !u!65 &65757341767356334
 BoxCollider:

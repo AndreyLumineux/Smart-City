@@ -10,11 +10,11 @@ namespace Parking
 		public UnityEvent onElevatorDown;
 		public UnityEvent onElevatorUp;
 
-		Animator animator;
-		static readonly int UpAnimHash = Animator.StringToHash("Up");
-		static readonly int DownAnimHash = Animator.StringToHash("Down");
+		private Animator animator;
+		private static readonly int UpAnimHash = Animator.StringToHash("Up");
+		private static readonly int DownAnimHash = Animator.StringToHash("Down");
 
-		void Awake()
+		private void Awake()
 		{
 			animator = GetComponent<Animator>();
 		}

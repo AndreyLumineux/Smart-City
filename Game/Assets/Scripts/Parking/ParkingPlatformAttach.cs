@@ -6,18 +6,19 @@ namespace Parking
 {
 	public class ParkingPlatformAttach : MonoBehaviour
 	{
-		ParkingMain parkingMain;
+		private ParkingMain parkingMain;
 
-		void Awake()
+		private void Awake()
 		{
 			parkingMain = GetComponentInParent<ParkingMain>();
 		}
 
-		void OnTriggerEnter(Collider other)
+		private void OnTriggerEnter(Collider other)
 		{
 			if (other.CompareTag("Vehicle"))
 			{
 				Attach(other.gameObject);
+				other.gameObject.transform.position = transform.position;
 				parkingMain.StockVehicle();
 			}
 		}

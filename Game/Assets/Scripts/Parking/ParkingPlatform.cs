@@ -12,19 +12,19 @@ namespace Parking
 	{
 		public float speed = 5f;
 
-		bool platformMoving = false;
-		ParkingMain parkingMain;
-		ParkingElevator parkingElevator;
-		ParkingPlatformAttach parkingPlatformAttach;
+		private bool platformMoving = false;
+		private ParkingMain parkingMain;
+		private ParkingElevator parkingElevator;
+		private ParkingPlatformAttach parkingPlatformAttach;
 
-		void Awake()
+		private void Awake()
 		{
 			parkingMain = GetComponentInParent<ParkingMain>();
 			parkingElevator = GetComponentInParent<ParkingElevator>();
 			parkingPlatformAttach = GetComponent<ParkingPlatformAttach>();
 		}
 
-		void Start()
+		private void Start()
 		{
 //			MovePlatformToParkingSpot(65);
 		}
@@ -70,7 +70,7 @@ namespace Parking
 			StartCoroutine(nameof(PlatformMoveCoroutine), movement);
 		}
 
-		IEnumerator PlatformMoveCoroutine(Vector3 movement)
+		private IEnumerator PlatformMoveCoroutine(Vector3 movement)
 		{
 			while (platformMoving)
 			{
@@ -93,13 +93,8 @@ namespace Parking
 
 			platformMoving = false;
 		}
-		
-		void PlatformDropVehicle(Vector3 direction)
-		{
-			Debug.Log("Dropped vehicle");
-		}
 
-		IEnumerator PlatformDropVehicleCoroutine(bool upSide)
+		private IEnumerator PlatformDropVehicleCoroutine(bool upSide)
 		{
 			while (platformMoving)
 			{

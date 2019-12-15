@@ -14,7 +14,7 @@ namespace ParkAPIClient
 
         public async Task<bool> UpdateCurrentAsync(int id, int current)
         {
-            HttpWebRequest request = WebRequest.CreateHttp($"{Host}/api/lots/update/${id}/{current}");
+            HttpWebRequest request = WebRequest.CreateHttp($"{Host}/api/lots/update/{id}/{current}");
             request.Method = WebRequestMethods.Http.Post;
             HttpWebResponse response = (HttpWebResponse) await request.GetResponseAsync();
             

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using ParkAPIClient;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -8,23 +10,24 @@ namespace Parking
 {
 	public class ParkingMain : MonoBehaviour
 	{
+		public int id;
 		public int maxSpots;
 		public int columns;
 		public int rows;
 		public List<ParkingSpot> parkingSpots;
 
-		ParkingElevator parkingElevator;
-		ParkingPlatform parkingPlatform;
+		private ParkingElevator parkingElevator;
+		private ParkingPlatform parkingPlatform;
+		
+		private readonly ParkApiClient client = new ParkApiClient("http://localhost");
 
-		void Awake()
+		private void Awake()
 		{
 			parkingSpots = new List<ParkingSpot>();
-			
-			ParkingSpot spot;
+
 			for (int i = 0; i < maxSpots; i++)
 			{
-				spot = new ParkingSpot();
-				parkingSpots.Add(spot);
+				parkingSpots.Add(new ParkingSpot());
 			}
 			
 			parkingElevator = GetComponent<ParkingElevator>();
@@ -33,7 +36,7 @@ namespace Parking
 			parkingElevator.onElevatorDown.AddListener(MovePlatform);
 		}
 
-		void Update()
+		private void Update()
 		{
 			foreach (ParkingSpot spot in parkingSpots)
 			{
@@ -46,24 +49,18 @@ namespace Parking
 			parkingElevator.ElevatorDown();
 		}
 
-		void MovePlatform()
+		private void MovePlatform()
 		{
 			ParkingSpot spot = FindFirstFreeParkingSpot();
 			parkingPlatform.MovePlatformToParkingSpot(parkingSpots.IndexOf(spot) + 1);
 			spot.Occupied = true;
+			int current = parkingSpots.Count(s => s.Occupied);
+			client.UpdateCurrentAsync(id, current);
 		}
 
-		ParkingSpot FindFirstFreeParkingSpot()
+		private ParkingSpot FindFirstFreeParkingSpot()
 		{
-			foreach (ParkingSpot parkingSpot in parkingSpots)
-			{
-				if (!parkingSpot.Occupied)
-				{
-					return parkingSpot;
-				}
-			}
-
-			return null;
+			return parkingSpots.FirstOrDefault(parkingSpot => !parkingSpot.Occupied);
 		}
 	}
 }

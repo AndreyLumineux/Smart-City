@@ -398,7 +398,7 @@ GameObject:
   - component: {fileID: 54600163206833944}
   - component: {fileID: 114603967481593302}
   - component: {fileID: 65403567155857628}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Car_4
   m_TagString: Vehicle
   m_Icon: {fileID: 0}
@@ -465,7 +465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052d4032839c450589c84b13277b200e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raycastDistance: 2
+  raycastDistance: 3
   speed: 5
 --- !u!65 &65403567155857628
 BoxCollider:

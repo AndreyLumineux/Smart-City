@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052d4032839c450589c84b13277b200e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raycastDistance: 2
+  raycastDistance: 3
   speed: 5
 --- !u!65 &1117882636024636125
 BoxCollider:
