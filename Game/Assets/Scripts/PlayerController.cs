@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Debug = System.Diagnostics.Debug;
 
 public class PlayerController : MonoBehaviour
@@ -15,6 +14,8 @@ public class PlayerController : MonoBehaviour
         camera = Camera.main;
         Debug.Assert(camera != null, nameof(camera) + " != null");
         cameraTransform = camera.transform;
+
+        Cursor.visible = false;
     }
 
     private void Update()

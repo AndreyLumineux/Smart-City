@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
-using UnityEditor;
+﻿using System.Collections;
 using UnityEngine;
-using Random = System.Random;
 
 namespace Parking
 {
