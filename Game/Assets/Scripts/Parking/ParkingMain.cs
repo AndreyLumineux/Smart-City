@@ -18,7 +18,7 @@ namespace Parking
 
 		private ParkingElevator parkingElevator;
 		private ParkingPlatform parkingPlatform;
-		
+
 		private readonly ParkApiClient client = new ParkApiClient("http://localhost");
 
 		private void Awake()
@@ -29,7 +29,7 @@ namespace Parking
 			{
 				parkingSpots.Add(new ParkingSpot());
 			}
-			
+
 			parkingElevator = GetComponent<ParkingElevator>();
 			parkingPlatform = GetComponentInChildren<ParkingPlatform>();
 
@@ -46,7 +46,7 @@ namespace Parking
 
 		public void StockVehicle()
 		{
-			parkingElevator.ElevatorDown();
+			parkingElevator.Invoke(nameof(ParkingElevator.ElevatorDown), 1f);
 		}
 
 		private void MovePlatform()

@@ -9,24 +9,25 @@ namespace Parking
 	{
 		public GameObject attachedVehicle;
 		
-		private const float PLATFORM_VEHICLE_Y_OFFSET = 0.3f;
+		public const float PLATFORM_VEHICLE_Y_OFFSET = 0.3f;
 
-		private Renderer renderer;
 		private ParkingMain parkingMain;
+		private ParkingPlatform parkingPlatform;
 
 		private void Awake()
 		{
 			parkingMain = GetComponentInParent<ParkingMain>();
-			renderer = GetComponent<Renderer>();
+			parkingPlatform = GetComponent<ParkingPlatform>();
 		}
 
 		private void OnTriggerEnter(Collider other)
 		{
-			if (attachedVehicle == null && other.GetComponent<CarAI>() is CarAI carAi)
+			// ReSharper disable once PatternAlwaysOfType
+			if (attachedVehicle == null && !parkingPlatform.platformMoving && other.GetComponent<CarAI>() is CarAI carAi)
 			{
 				carAi.StopMoving();
+				parkingPlatform.LoadVehicle(other.gameObject);
 				Attach(other.gameObject);
-				other.gameObject.transform.position = renderer.bounds.center + Vector3.up * PLATFORM_VEHICLE_Y_OFFSET;
 				parkingMain.StockVehicle();
 			}
 		}

@@ -9,8 +9,10 @@ namespace Parking
 	public class ParkingPlatform : MonoBehaviour
 	{
 		public float speed = 5f;
-
-		private bool platformMoving = false;
+		public float loadSpeed = 1f;
+		public new Renderer renderer;
+		public bool platformMoving = false;
+		
 		private ParkingMain parkingMain;
 		private ParkingElevator parkingElevator;
 		private ParkingPlatformAttach parkingPlatformAttach;
@@ -20,13 +22,11 @@ namespace Parking
 			parkingMain = GetComponentInParent<ParkingMain>();
 			parkingElevator = GetComponentInParent<ParkingElevator>();
 			parkingPlatformAttach = GetComponent<ParkingPlatformAttach>();
-		}
+			
+			renderer = GetComponent<Renderer>();
 
-		private void Start()
-		{
-//			MovePlatformToParkingSpot(65);
 		}
-
+		
 		public void RetrievePlatform(int verticalMoves, int horizontalMoves)
 		{
 			PlatformMove(horizontalMoves * 2 * Vector3.left);
@@ -103,7 +103,7 @@ namespace Parking
 
 			if (transform.childCount == 0)
 			{
-				Debug.LogError("Platform has no vehicle attached, but DropVehicle has been tried.");
+				Debug.LogError("Platform has no vehicle attached, but DropVehicle has been called.");
 			}
 			Transform vehicle = transform.GetChild(0);
 			parkingPlatformAttach.Dettach(vehicle.gameObject);
@@ -124,17 +124,33 @@ namespace Parking
 			platformMoving = false;
 		}
 
+		private IEnumerator MoveObjectCoroutine(GameObject obj, Vector3 targetPosition)
+		{
+			while (platformMoving)
+			{
+				yield return new WaitForFixedUpdate();
+			}
+
+			platformMoving = true;
+			
+			float t = 0;
+			Vector3 initialPosition = obj.transform.position;
+			while (t < 1)
+			{
+				t += loadSpeed * Time.deltaTime;
+				obj.transform.position = Vector3.Lerp(initialPosition, targetPosition, t);
+
+				yield return new WaitForFixedUpdate();
+			}
+
+			platformMoving = false;
+		}
 		
-		
-		
-		
-		
-		
-		
-//		void MovePlatformToPack(int pack)
-//		{
-//			PlatformMove((pack / parkingMain.columns) * 3 * Vector3.back);
-//			PlatformMove(((pack % parkingMain.columns - 1 + parkingMain.columns) % parkingMain.columns) * 3 * Vector3.right);
-//		}
+		public void LoadVehicle(GameObject vehicle)
+		{
+			StartCoroutine(MoveObjectCoroutine(vehicle, renderer.bounds.center +
+			                                            Vector3.up * ParkingPlatformAttach.PLATFORM_VEHICLE_Y_OFFSET));
+
+		}
 	}
 }
